@@ -70,6 +70,7 @@
                 noCache: false,
                 onSearchStart: noop,
                 onSearchComplete: noop,
+                onSearchError: noop,
                 containerClass: 'autocomplete-suggestions',
                 tabDisabled: false,
                 dataType: 'text',
@@ -463,6 +464,8 @@
                     that.currentRequest = null;
                     that.processResponse(data, q);
                     options.onSearchComplete.call(that.element, q);
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    options.onSearchError.call(that.element, q, jqXHR, textStatus, errorThrown);
                 });
             }
         },
